@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Article Title – Shake & Gulp</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+
+        *{
+        margin:0;
+        padding:0;
+        box-sizing:border-box;
+        }
+
+        body{
+        font-family:'Inter',sans-serif;
+        background:#f7f7f7;
+        padding-top:100px;
+        color:#2f3b2f;
+        }
+
+        /* CONTAINER */
+
+        .container{
+        width:85%;
+        max-width:1000px;
+        margin:auto;
+        }
+
+        /* NAVBAR  */
+
+       .navbar{
+    position:fixed;
+    top:20px;
+    left:50%;
+    transform:translateX(-50%);
+
+    width:95%;          /* MUCH WIDER */
+    max-width:none;     /* remove limit */
+
+    padding:16px 70px;  /* more inner spacing */
+    border-radius:50px;
+
+    backdrop-filter:blur(15px);
+    background:rgba(0,0,0,0.08);
+    border:1px solid rgba(0,0,0,0.15);
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    color:#000;
+    font-weight:600;
+    letter-spacing:1px;
+    z-index:100;
+}
+
+.nav-links{
+    display:flex;
+    gap:35px;
+}
+
+.nav-links a{
+    text-decoration:none;
+    color:#000;
+    font-size:14px;
+    transition:0.3s ease;
+}
+
+.nav-links a:hover{
+    opacity:0.6;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px; /* space between logo and text */
+}
+
+.logo img{
+    width:40px;   /* control logo size */
+    height:auto;
+}
+
+/* =============================
+   CONTACT FORM GLASS POPUP
+============================= */
+
+.contact-overlay{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+
+    backdrop-filter:blur(10px);
+    background:rgba(0,0,0,0.3);
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    z-index:999;
+
+    opacity:0;
+    pointer-events:none;
+    transition:0.4s;
+}
+
+.contact-overlay.active{
+    opacity:1;
+    pointer-events:auto;
+}
+
+.contact-form{
+    width:400px;
+    padding:40px;
+    border-radius:25px;
+
+    backdrop-filter:blur(15px);
+    background:rgba(255,255,255,0.25);
+    border:1px solid rgba(255,255,255,0.4);
+
+    text-align:center;
+}
+
+.contact-form h2{
+    margin-bottom:25px;
+}
+
+.contact-form input{
+
+    width:100%;
+    padding:12px;
+    margin-bottom:15px;
+
+    border:none;
+    border-radius:10px;
+}
+
+.contact-form textarea{
+    width:100%;
+    height:44px;          /* same height as inputs */
+
+    padding:12px;         /* same padding as inputs */
+    margin-bottom:15px;
+
+    border:none;
+    border-radius:10px;
+    resize:none;
+
+    line-height:20px;     /* centers text visually */
+}
+
+.contact-form button{
+    padding:12px 30px;
+    border:none;
+    border-radius:30px;
+    background:black;
+    color:white;
+    cursor:pointer;
+}
+
+.close-btn{
+    position:absolute;
+    top:20px;
+    right:25px;
+    border:none;
+    background:none;
+    font-size:22px;
+    cursor:pointer;
+}
+
+        /* =============================
+   NAVBAR DROPDOWN
+============================= */
+
+.nav-item{
+    position:relative;
+}
+
+.dropdown{
+    position:absolute;
+    top:100%;
+    left:0;
+    margin-top:px;
+
+
+    min-width:220px;
+
+    opacity:0;
+    transform:translateY(10px);
+    pointer-events:none;
+
+    transition:0.3s ease;
+}
+
+/* =============================
+   NAVBAR DROPDOWN BACKGROUND BLUR
+============================= */
+
+.nav-blur{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+
+    backdrop-filter:blur(12px);
+    background:rgba(0,0,0,0.15);
+
+    opacity:0;
+    pointer-events:none;
+
+    transition:0.3s ease;
+    z-index:50;
+}
+
+/* When dropdown is active */
+body:has(.nav-item:hover) .nav-blur{
+    opacity:1;
+}
+
+.nav-item:hover .dropdown{
+    opacity:1;
+    transform:translateY(0);
+    pointer-events:auto;
+}
+
+.dropdown a{
+    display:block;
+    padding:8px 10px;
+    font-size:14px;
+    color:#000;
+    text-decoration:none;
+    border-radius:8px;
+    transition:0.25s;
+}
+
+.dropdown a:hover{
+    background:rgba(255,255,255,0.4);
+    padding-left:15px;
+}
+
+
+        /* ARTICLE */
+
+        .article{
+        padding:60px 0;
+        }
+
+        .article h1{
+        font-family:'Libre Baskerville',serif;
+        font-size:42px;
+        margin-bottom:30px;
+        text-align:center;
+        }
+
+       .article img{
+  width:1000px;
+  height:400px;
+  object-fit:cover;
+  border-radius:20px;
+  display:block;
+  margin:0 auto 30px;
+}
+
+        .article p{
+        font-size:16px;
+        line-height:1.8;
+        margin-bottom:18px;
+        color:#444;
+        }
+
+        /* FOOTER */
+
+        .footer{
+        background:black;
+        color:white;
+        padding:60px 0;
+        margin-top:80px;
+        }
+
+        .footer-cols{
+        display:flex;
+        justify-content:space-between;
+        flex-wrap:wrap;
+        gap:30px;
+        }
+
+        .footer strong{
+        font-family:'Libre Baskerville',serif;
+        font-size:18px;
+        }
+
+        .copyright{
+        text-align:center;
+        margin-top:30px;
+        font-size:13px;
+        opacity:0.7;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<div class="navbar">
+
+    <div class="logo">
+        <img src="https://i.ibb.co/cSXcmScQ/Shake-Gulp-Logo.png">
+        SHAKE & GULP
+    </div>
+
+    <div class="nav-links">
+
+        <a href="https://vatsalvarma.github.io/SHAKE-GULP/#home">Home</a>
+
+        <div class="nav-item">
+            <a href="https://vatsalvarma.github.io/SHAKE-GULP/#traditional">Traditional Drinks</a>
+
+            <div class="dropdown">
+                <a ></a>
+                <a href="https://vatsalvarma.github.io/Jeerabtmlk-prbxx/">Jeera Buttermilk</a>
+                <a href="https://vatsalvarma.github.io/Masala-btmlk-prbxx/">Masala Buttermilk</a>
+                <a href="https://vatsalvarma.github.io/Dates-prbxx/">Date Buttermilk</a>
+                <a href="https://vatsalvarma.github.io/ragibrml-prbxxx/">Ragi Buttermilk</a>
+
+                <a href="https://vatsalvarma.github.io/Sabjalass-prbxs/">Sabja Lassi</a>
+                <a href="https://vatsalvarma.github.io/Sweetbtmlk-prbxx/">Buttermilk</a>
+                <a href="https://vatsalvarma.github.io/Nmpsabja/">Nimbu Sabja</a>
+                <a href="https://vatsalvarma.github.io/Nimpud-prbxx/">Nimbu Pudina</a>
+
+            </div>
+        </div>
+
+        <div class="nav-item">
+            <a href="https://vatsalvarma.github.io/SHAKE-GULP/#wellness">Wellness Drinks</a>
+
+            <div class="dropdown">
+                <a ></a>
+                <a href="https://vatsalvarma.github.io/Ginger-prbxx/">Ginger Shot</a>
+                <a href="https://vatsalvarma.github.io/GingTer-prbxx/">Ginger Turmeric Shot</a>
+                <a href="https://vatsalvarma.github.io/Amla-prbrxx/">Amla Shot</a>
+                <a href="https://vatsalvarma.github.io/Neem-prbxx/">Neem Shot</a>
+                <a href="https://vatsalvarma.github.io/Moringa-prbxx/">Moringa Shot</a>
+                <a href="https://vatsalvarma.github.io/wheatgrass-prbxxx/">Wheatgrass Shot</a>
+                <a href="https://vatsalvarma.github.io/Barley-prbxx/">Barley Drink</a>
+
+            </div>
+        </div>
+
+        <a href="https://vatsalvarma.github.io/SHAKE-GULP/#read">Read</a>
+        <a href="https://vatsalvarma.github.io/SHAKE-GULP/#">Contact</a>
+
+    </div>
+
+</div>
+
+<div class="nav-blur"></div>
+
+<!-- ARTICLE CONTENT -->
+
+<section class="article container">
+
+    <h1>Benefits of Traditional Drinks</h1>
+
+    <img src="https://media.istockphoto.com/id/519441705/photo/kale-juice.jpg?s=2048x2048&w=is&k=20&c=OUCgrhwvjz394j7ovreE8QKFzXuFELdYFXh1mTncsdg=">
+
+
+    <p>
+        Traditional drinks have been part of cultural food habits for centuries and are often prepared using simple, natural ingredients. These beverages typically include elements such as curd, herbs, spices, seeds, and natural fruits. Because they are made with minimally processed ingredients, traditional drinks are often considered healthier alternatives to modern sugary beverages. They provide hydration while also delivering nutrients that support overall well-being.
+    </p>
+
+    <p>
+        One of the key benefits of traditional drinks is their ability to support digestion. Many ingredients used in these beverages, such as cumin, ginger, mint, and yogurt, are known for their digestive properties. These ingredients help stimulate digestive enzymes and improve the body’s ability to process food efficiently. As a result, traditional drinks are often consumed after meals to reduce bloating and maintain digestive balance.
+    </p>
+
+    <p>
+        Traditional beverages also help maintain hydration and regulate body temperature. Drinks like buttermilk, lemon-based beverages, and seed-infused drinks have natural cooling properties. These cooling effects are particularly beneficial in warm climates where maintaining hydration is essential for overall health. Because they contain natural electrolytes and minerals, these drinks help replenish the body more effectively than many processed beverages.
+    </p>
+
+    <p>
+        Another advantage of traditional drinks is their nutritional value. Ingredients such as curd, millets, seeds, and fruits provide important nutrients like calcium, vitamins, fiber, and antioxidants. These nutrients support various bodily functions including bone health, immunity, and metabolic balance. When consumed regularly as part of a balanced diet, traditional drinks can contribute to improved vitality and overall wellness.
+    </p>
+
+    <p>
+        Overall, traditional drinks represent a combination of cultural heritage and nutritional wisdom. They reflect long-standing practices that emphasize natural ingredients and balanced nutrition. In modern times, these beverages continue to be valued as healthier alternatives to artificially flavored drinks. Their continued popularity demonstrates how traditional knowledge can support modern health and lifestyle choices.
+    </p>
+
+    <p>
+        Shake & Gulp brings this timeless drink into the modern world. Using simple
+        ingredients and honest recipes, each bottle captures the same comforting
+        taste many people grew up with.
+    </p>
+
+</section>
+
+<!-- FOOTER -->
+
+<footer class="footer">
+
+    <div class="container footer-cols">
+
+        <div>
+            <strong>Shake & Gulp</strong>
+            <p>Traditional Drinks. Honest Ingredients.</p>
+        </div>
+
+        <div>
+            <p>📍 Address</p>
+            <p>📞 Phone</p>
+            <p>✉️ Email</p>
+        </div>
+
+        <div>
+            <p>Quick Links</p>
+            <p>Home</p>
+            <p>Traditional Drinks</p>
+            <p>Wellness Drinks</p>
+            <p>Read</p>
+        </div>
+
+    </div>
+
+    <p class="copyright">
+        © Shake & Gulp — Shake Well. Gulp Fresh.
+    </p>
+
+</footer>
+
+</body>
+</html>
