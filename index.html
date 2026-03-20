@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -261,7 +262,8 @@ body:has(.nav-item:hover) .nav-blur{
         }
 
        .article img{
-  width:1000px;
+ width:100%;
+  max-width:1000px;
   height:400px;
   object-fit:cover;
   border-radius:20px;
@@ -303,6 +305,85 @@ body:has(.nav-item:hover) .nav-blur{
         font-size:13px;
         opacity:0.7;
         }
+
+        /* =============================
+   MOBILE OPTIMIZATION
+============================= */
+
+@media (max-width: 768px){
+
+    body{
+        padding-top:80px;
+    }
+
+    .container{
+        width:92%;
+    }
+
+    /* NAVBAR */
+    .navbar{
+        padding:12px 20px;
+        border-radius:30px;
+    }
+
+    .logo img{
+        width:32px;
+    }
+
+    .nav-links{
+        display:none; /* hide desktop menu */
+    }
+
+    /* Optional: simple mobile menu button */
+    .menu-toggle{
+        display:block;
+        font-size:22px;
+        cursor:pointer;
+    }
+
+    /* ARTICLE */
+    .article{
+        padding:40px 0;
+    }
+
+    .article h1{
+        font-size:26px;
+        line-height:1.3;
+        margin-bottom:20px;
+    }
+
+    .article img{
+        width:100%;       /* FIXED */
+        height:220px;     /* smaller height */
+        border-radius:14px;
+    }
+
+    .article p{
+        font-size:15px;
+        line-height:1.7;
+    }
+
+    /* CONTACT FORM */
+    .contact-form{
+        width:90%;
+        padding:25px;
+    }
+
+    /* FOOTER */
+    .footer{
+        padding:40px 0;
+    }
+
+    .footer-cols{
+        flex-direction:column;
+        gap:20px;
+        text-align:center;
+    }
+
+    .copyright{
+        font-size:12px;
+    }
+}
 
     </style>
 </head>
@@ -375,11 +456,11 @@ body:has(.nav-item:hover) .nav-blur{
 
 
     <p>
-       Wellness shots are concentrated beverages designed to deliver a high amount of nutrients in a small serving. These drinks typically contain ingredients such as ginger, turmeric, moringa, wheatgrass, or amla. Because they are highly concentrated, wellness shots are often consumed in small quantities but still provide significant nutritional benefits. They have become increasingly popular among people who prioritize health and functional nutrition.
+        Wellness shots are concentrated beverages designed to deliver a high amount of nutrients in a small serving. These drinks typically contain ingredients such as ginger, turmeric, moringa, wheatgrass, or amla. Because they are highly concentrated, wellness shots are often consumed in small quantities but still provide significant nutritional benefits. They have become increasingly popular among people who prioritize health and functional nutrition.
     </p>
 
     <p>
-       One of the main advantages of wellness shots is their ability to support immunity. Many ingredients used in these drinks are rich in antioxidants, vitamins, and plant compounds that help protect the body from oxidative stress. Antioxidants play a crucial role in strengthening the immune system and maintaining cellular health. By incorporating these shots into daily routines, individuals may support their body’s natural defense mechanisms.
+        One of the main advantages of wellness shots is their ability to support immunity. Many ingredients used in these drinks are rich in antioxidants, vitamins, and plant compounds that help protect the body from oxidative stress. Antioxidants play a crucial role in strengthening the immune system and maintaining cellular health. By incorporating these shots into daily routines, individuals may support their body’s natural defense mechanisms.
     </p>
 
     <p>
@@ -387,11 +468,11 @@ body:has(.nav-item:hover) .nav-blur{
     </p>
 
     <p>
-       Another important benefit of wellness shots is their potential role in detoxification and internal balance. Many plant-based ingredients used in these beverages support the body’s natural detox processes. For example, certain herbs and greens help the liver process toxins and maintain metabolic balance. This makes wellness shots a popular component of detox and wellness programs.
+        Another important benefit of wellness shots is their potential role in detoxification and internal balance. Many plant-based ingredients used in these beverages support the body’s natural detox processes. For example, certain herbs and greens help the liver process toxins and maintain metabolic balance. This makes wellness shots a popular component of detox and wellness programs.
     </p>
 
     <p>
-       Overall, wellness shots represent a modern approach to traditional nutrition. They combine powerful natural ingredients into convenient, concentrated drinks that fit easily into busy lifestyles. As awareness about functional foods continues to grow, wellness shots have become a common feature in health cafés and wellness-focused beverage menus. Their popularity reflects a broader shift toward preventive health and natural nutrition.
+        Overall, wellness shots represent a modern approach to traditional nutrition. They combine powerful natural ingredients into convenient, concentrated drinks that fit easily into busy lifestyles. As awareness about functional foods continues to grow, wellness shots have become a common feature in health cafés and wellness-focused beverage menus. Their popularity reflects a broader shift toward preventive health and natural nutrition.
     </p>
 
     <p>
